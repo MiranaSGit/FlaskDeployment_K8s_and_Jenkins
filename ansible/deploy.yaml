@@ -1,0 +1,15 @@
+---
+- hosts: role_master
+  become: true
+  tasks:
+    - name: copy kubernetes directories to the kubernetes master node
+      copy:
+        src: /var/lib/jenkins/workspace/pipeline-deneme/k8s/
+        dest: /home/ubuntu
+    - name: apply kubernetes files
+      become_user: ubuntu
+      shell: |
+        kubectl apply -f /home/ubuntu/secret_configmap/
+        kubectl apply -f /home/ubuntu/mysql/
+        kubectl apply -f /home/ubuntu/result_server/
+        kubectl apply -f /home/ubuntu/web_server/

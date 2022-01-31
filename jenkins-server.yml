@@ -12,6 +12,7 @@ Parameters:
     Description: Enter the name of your Key Pair for SSH connections.
     Type: AWS::EC2::KeyPair::KeyName
     ConstraintDescription: Must one of the existing EC2 KeyPair
+
 Resources:
   EmpoweringRoleforJenkinsServer:
     Type: "AWS::IAM::Role"
@@ -21,9 +22,9 @@ Resources:
           - Effect: Allow
             Principal:
               Service:
-              - ec2.amazonaws.com
+                - ec2.amazonaws.com
             Action:
-              - 'sts:AssumeRole'
+              - "sts:AssumeRole"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess
         - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
@@ -60,11 +61,11 @@ Resources:
         - DeviceName: /dev/xvda
           Ebs:
             VolumeType: gp2
-            VolumeSize: '16'
+            VolumeSize: "16"
       IamInstanceProfile: !Ref JenkinsServerEC2Profile
       SecurityGroupIds:
         - !GetAtt JenkinsServerSecurityGroup.GroupId
-      Tags:                
+      Tags:
         - Key: Name
           Value: !Sub Jenkins Server of ${AWS::StackName}
         - Key: server
@@ -116,15 +117,15 @@ Resources:
           amazon-linux-extras install ansible2
           # install boto3
           pip3 install boto3
-          
+
 Outputs:
   JenkinsDNS:
-    Description: Jenkins Server DNS Name 
-    Value: !Sub 
+    Description: Jenkins Server DNS Name
+    Value: !Sub
       - ${PublicAddress}
       - PublicAddress: !GetAtt JenkinsServer.PublicDnsName
   JenkinsURL:
     Description: Jenkins Server URL
-    Value: !Sub 
+    Value: !Sub
       - http://${PublicAddress}:8080
       - PublicAddress: !GetAtt JenkinsServer.PublicDnsName

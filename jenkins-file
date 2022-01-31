@@ -2,9 +2,9 @@ pipeline {
     agent any
     environment {
         PATH="$PATH:/usr/local/bin"
-        APP_STACK_NAME="k8s-prj"
-        CFN_KEYPAIR="ec2_key"
-        CFN_TEMPLATE="AppFiles/kubernetes-env-cf.yaml"
+        APP_STACK_NAME="FlaskApp"
+        CFN_KEYPAIR="ofd"
+        CFN_TEMPLATE="kubernetes-cluster.yaml"
         AWS_REGION="us-east-1"
     }
     stages {
@@ -21,12 +21,12 @@ pipeline {
         # }
         stage('Building images and pushing to dockerhub') {
             steps {
-                sh "cd AppFiles/image_for_result_server && \
-                docker build -t mirana/python_result_server:latest ."
-                sh "cd AppFiles/image_for_web_server && \
-                docker build -t mirana/python_web_server:latest ."
-                sh "docker push mirana/python_result_server"
-                sh "docker push mirana/python_web_server"
+                sh "cd FlaskFiles/result_server && \
+                docker build -t mirana/flask_result_server:latest ."
+                sh "cd FlaskFiles/web_server && \
+                docker build -t mirana/flask_web_server:latest ."
+                sh "docker push mirana/flask_result_server"
+                sh "docker push mirana/flask_web_server"
             }
         }
             # stage('Deploying kubernetes files') {

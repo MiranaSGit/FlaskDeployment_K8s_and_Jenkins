@@ -12,7 +12,7 @@ pipeline {
             steps {
                 sh "cd FlaskFiles/result_server && \
                 docker build -t result_server . && \
-                docker tag result_server mirana/flask_result_server && 
+                docker tag result_server mirana/flask_result_server && \
                 docker push mirana/flask_result_server:latest " 
             }
         }

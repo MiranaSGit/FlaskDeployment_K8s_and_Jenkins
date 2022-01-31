@@ -8,32 +8,32 @@ pipeline {
         AWS_REGION="us-east-1"
     }
     stages {
-        stage('Create k8s Cluster') {
-            steps {
-                echo "Creating k8s Cluster for the app"
-                sh """
-                aws cloudformation create-stack --region ${AWS_REGION} \
-                --stack-name ${APP_STACK_NAME} --capabilities CAPABILITY_IAM \
-                --template-body file://${CFN_TEMPLATE} --parameters ParameterKey=KeyPairName,ParameterValue=${CFN_KEYPAIR}
-                """
-                sh "sleep 500"
-            }
-        }
+        # stage('Create k8s Cluster') {
+        #     steps {
+        #         echo "Creating k8s Cluster for the app"
+        #         sh """
+        #         aws cloudformation create-stack --region ${AWS_REGION} \
+        #         --stack-name ${APP_STACK_NAME} --capabilities CAPABILITY_IAM \
+        #         --template-body file://${CFN_TEMPLATE} --parameters ParameterKey=KeyPairName,ParameterValue=${CFN_KEYPAIR}
+        #         """
+        #         sh "sleep 500"
+        #     }
+        # }
         stage('Building images and pushing to dockerhub') {
             steps {
                 sh "cd AppFiles/image_for_result_server && \
-                docker build -t c8218eyup1313/python_result_server:latest ."
+                docker build -t mirana/python_result_server:latest ."
                 sh "cd AppFiles/image_for_web_server && \
-                docker build -t c8218eyup1313/python_web_server:latest ."
-                sh "docker push c8218eyup1313/python_result_server"
-                sh "docker push c8218eyup1313/python_web_server"
+                docker build -t mirana/python_web_server:latest ."
+                sh "docker push mirana/python_result_server"
+                sh "docker push mirana/python_web_server"
             }
         }
-            stage('Deploying kubernetes files') {
-                steps {
-                    sh "ansible-playbook ansible/deploy.yaml \
-                    -i ansible/inventory/dynamic-inventory-master_aws_ec2.yaml"
-                }
-            }
+            # stage('Deploying kubernetes files') {
+            #     steps {
+            #         sh "ansible-playbook ansible/deploy.yaml \
+            #         -i ansible/inventory/dynamic-inventory-master_aws_ec2.yaml"
+            #     }
+            # }
     }
 }

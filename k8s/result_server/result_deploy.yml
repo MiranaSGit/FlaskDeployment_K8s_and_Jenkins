@@ -18,7 +18,7 @@ spec:
       containers:
         - name: result-app
           resources:
-          image: c8218eyup1313/python_result_server:latest
+          image: mirana/flask_result_server
           ports:
             - containerPort: 80
           env:
@@ -29,5 +29,4 @@ spec:
                   key: mysql-admin-password
           envFrom:
             - configMapRef:
-                name: servers-configmap
-
+                name: server-configmap

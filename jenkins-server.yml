@@ -117,8 +117,8 @@ Resources:
           amazon-linux-extras install ansible2
           # install boto3
           pip3 install boto3
-          KEYPAIR=!Ref KeyPairName
-          sed -i '/^\[defaults\]/a host_key_checking = False \ninterpreter_python = auto_silent \nprivate_key_file = /var/lib/jenkins/' ansible.cfg
+          # Please replace your keypair file in the command below.
+          sed -i '/^\[defaults\]/a host_key_checking = False \ninterpreter_python = auto_silent \nprivate_key_file = /var/lib/jenkins/ofd.pem' /etc/ansible/ansible.cfg
 
 Outputs:
   JenkinsDNS:

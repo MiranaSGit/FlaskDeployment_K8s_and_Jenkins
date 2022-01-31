@@ -11,11 +11,11 @@ pipeline {
         stage('Building images and pushing to dockerhub') {
             steps {
                 sh "cd FlaskFiles/result_server && \
-                docker build -t mirana/dockerhub:flask_result_server:latest ."
+                docker build -t flask_result_server:latest ."
                 sh "cd FlaskFiles/web_server && \
-                docker build -t mirana/dockerhub:flask_web_server:latest ."
-                sh "docker push mirana/dockerhub:flask_result_server"
-                sh "docker push mirana/dockerhub:flask_web_server"
+                docker build -t flask_web_server:latest ."
+                sh "docker push mirana/flask_result_server"
+                sh "docker push mirana/flask_web_server"
             }
         }
     }

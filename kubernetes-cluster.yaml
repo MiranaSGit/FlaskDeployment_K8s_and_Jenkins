@@ -177,7 +177,7 @@ Resources:
         - !GetAtt WorkersSecurityGroup.GroupId
       Tags:
         - Key: Name
-          Value: !Sub Kube Worker 1st on Ubuntu 20.04 of ${AWS::StackName}
+          Value: !Sub Kube Worker 1st of ${AWS::StackName}
       UserData:
         Fn::Base64: !Sub |
           #! /bin/bash

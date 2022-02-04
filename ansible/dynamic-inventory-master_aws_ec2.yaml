@@ -3,11 +3,11 @@ regions:
   - "us-east-1"
 filters:
   tag:role: master
-  tag:Name: Kube Master 1st on Ubuntu 20.04 of k8s-prj
+  tag:environment: prod
 keyed_groups:
   - key: tags['role']
-    prefix: 'role_'
-    separator: ''
+    prefix: "role_"
+    separator: ""
 hostnames:
   - "private-ip-address"
 compose:
